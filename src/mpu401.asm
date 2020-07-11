@@ -55,6 +55,7 @@ install_irq:
 	sta $0315
 	cli
 irq_installed:
+	jsr mpu_basic_enable
 	lda #$FF
 	jsr mpucmd
 	lda #$01
@@ -91,6 +92,7 @@ ramCopy2:
 c000block: .segmentout[segments="HighMemory"]
 
 .segment HighMemory [start=$c000, min=$c000, max=$cfff]
+.memblock "MPU401 API"
 jmp mpucmd
 jmp noteon
 jmp noteoff
@@ -291,3 +293,5 @@ store_midi_byte:
 	sta ringBufferWritePtr
 	rts
 }
+
+#import "basic.asm"
