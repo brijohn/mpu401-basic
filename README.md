@@ -9,6 +9,9 @@ This is a program for the C64 that will extend basic to support controlling a mp
 * ``mpu <command>`` <br>
   Send a command to the MPU unit. <br>
   example: ``mpu 63: REM put the mpu into UART mode``
+* ``mpu in <numeric variable>`` <br>
+  Read incoming midi byte into a variable. A value of 244 means no data in queue. <br>
+  example: ``mpu in MV: REM Read next midi in value into variable MV``
 * ``midi voice on <note>,<channel>,<velocity>`` <br>
   Send midi noteon command <br>
   example: ``midi voice on 60,2,70: REM Turn on middle C on channel 2 with velocity of 70``
@@ -24,6 +27,3 @@ This is a program for the C64 that will extend basic to support controlling a mp
 * ``midi pitch <pitch>,<channel>`` <br>
   Send midi pitch bend change command <br>
   example: ``midi pitch 8448,2: REM Change pitch bend for channel 2 to 8448``
-* ``midi input <numeric variable>`` <br>
-  Read incoming midi byte into a variable. A value of 244 means no data in queue. <br>
-  example: ``midi input MV: REM Read next midi in value into variable MV``

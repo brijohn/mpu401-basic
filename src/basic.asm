@@ -58,6 +58,7 @@ tokenlist:
 	:OutputToken("CTRL", 0)
 	:OutputToken("PITCH", 0)
 	:OutputToken("OFF", 0)
+	:OutputToken("IN", 0)
 	.byte 00
 
 .align $100
@@ -418,10 +419,15 @@ mpu_execute_token:
 }
 
 perform_mpu: {
+	cmp #tokens.get("in") // IN Keyword
+	beq in
 	jsr $B79E     // read byte into X
 	txa
 	jsr mpucmd
 	jmp basic2_main_loop
+in:
+	jsr $0073
+	jmp perform_midi_input
 }
 
 perform_midi: {
@@ -433,8 +439,6 @@ perform_midi: {
 	beq control
 	cmp #tokens.get("pitch") // PITCH Keyword
 	beq pitch
-	cmp #$85                 // INPUT Keyword
-	beq input
 	ldx #$0B
 	jmp $A437
 voice:
@@ -449,9 +453,6 @@ control:
 pitch:
 	jsr $0073
 	jmp perform_pitch
-input:
-	jsr $0073
-	jmp perform_midi_input
 }
 
 perform_note: {
